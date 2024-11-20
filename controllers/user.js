@@ -4,7 +4,7 @@ import jwt from "jsonwebtoken";
 import { loginValidator, registerValidator, updateProfileValidator } from "../validators/user.js";
 
 
-export const regsiter = async (req, res, next) => {
+export const register = async (req, res, next) => {
     // Validate the request body
     const { error, value } = registerValidator.validate(req.body);
 
@@ -13,6 +13,21 @@ export const regsiter = async (req, res, next) => {
     }
 
     const { name, email, password, ...rest } = value;
+
+    //check required fields
+    if (!name || !email || !password) {
+        return res.status(400).json({ message: "All fields are required" });
+    }
+
+    // //check if email is valid
+    // if (!validator.isEmail(email)) {
+    //     return res.status(400).json({ message: "Invalid email" });
+    // }
+
+    //check password length
+    if (password.length < 6) {
+        return res.status(400).json({ message: "Password must be at least 6 characters long" });
+    }
 
     // Check if the user already exists
 
@@ -48,13 +63,28 @@ export const regsiter = async (req, res, next) => {
             { expiresIn: "1d" }
         );
 
+         // Remove password from response
+         const userObject = user.toJSON();
+         const { password: _, ...userWithoutPassword } = userObject;
+ 
+         const response = {
+             token,
+             user: userWithoutPassword
+         };
+
+        // const response = {
+        //     token,
+        //     ...rest 
+        // }
+
         // Send the response
 
-        res.status(201).json({ message: "User created successfully", user, token });
+        res.status(201).json({ message: "User created successfully", user: userWithoutPassword, token });
     } catch (error) {
         next(error);
     }
 };
+
 
 export const login = async (req, res, next) => {
     // Validate the request body

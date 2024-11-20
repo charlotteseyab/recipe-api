@@ -1,11 +1,11 @@
 import { Router } from "express";
-import { deleteProfile, getProfile, login, logout, regsiter, updateProfile } from "../controllers/user.js";
+import { deleteProfile, getProfile, login, logout, register,  updateProfile } from "../controllers/user.js";
 import { hasPermission, isAuthenticated } from "../middleware/auth.js";
 
 
 export const userRouter = Router();
 
-userRouter.post('/register', regsiter);
+userRouter.post('/register', register);
 
 
 userRouter.post('/login', login);
