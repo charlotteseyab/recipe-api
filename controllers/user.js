@@ -95,9 +95,12 @@ export const login = async (req, res, next) => {
 
 export const getProfile = async(req, res, next) => {
     try {
+        // Find the user by id
         const user = await User
             .findById(req.auth.id)
             .select({ password: false });
+
+        // Send the response
         res.status(200).json(user);
     } catch (error) {
         next(error);
@@ -111,16 +114,27 @@ export const getProfile = async(req, res, next) => {
      if(error) {
          return res.status(422).json({error:"Validation error", details: error.details});
      }
+
+     // Find the user by id
  
      const oldUser = await User.findById(req.auth.id);
      if(!oldUser) {
          return res.status(404).json({message: "User not found"});
      }
+
+     // Update the user
  
      const updatedUser = await User.findByIdAndUpdate(req.auth.id, value,  {new: true});
+
+     // Generate a JWT token
  
-     const token = jwt.sign({id: updatedUser._id}, process.env.JWT_SECRET, {expiresIn: "1d"});
- 
+     const token = jwt.sign({
+        id: updatedUser._id}, 
+        process.env.JWT_SECRET, 
+        {expiresIn: "1d"});
+
+     // Send the response
+        
      const response = {
          token,
          user: updatedUser
@@ -134,7 +148,10 @@ export const getProfile = async(req, res, next) => {
 
  export const deleteProfile = async (req, res, next) => {
     try {
+        // Find the user by id
         await User.findByIdAndDelete(req.auth.id);
+
+        // Send the response
         res.status(200).json({message: "User deleted successfully"});
     } catch (error) {
         next(error);
@@ -153,9 +170,14 @@ export const getProfile = async(req, res, next) => {
 
  export const logout = async (req, res, next) => {
    try {
+    // Get the token from the request headers   
     const token = req.headers.authorization.split(" ")[1];
+
+    // Create a new blacklisted token
     const blacklistedToken = new BlacklistedToken({token});
     await blacklistedToken.save();
+
+    // Send the response
     res.status(200).json({message: "Logout successful"});
    } catch (error) {
     next(error);
