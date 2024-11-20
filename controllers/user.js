@@ -111,11 +111,15 @@ export const login = async (req, res, next) => {
         // Generate a JWT token
         const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: "1d" });
 
-        // Send the response
+        // Remove password from response
+        const userObject = user.toJSON();
+        const { password: _, ...userWithoutPassword } = userObject;
+
         const response = {
             token,
-            user
+            user: userWithoutPassword
         };
+
 
         res.status(200).json(response);
     } catch (error) {
