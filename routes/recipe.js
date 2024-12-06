@@ -7,7 +7,7 @@ import { recipeIconUpload } from "../middleware/upload.js";
 export const recipeRouter = Router();
 
 
-recipeRouter.post('/recipes', isAuthenticated, hasPermission('create_recipe'), recipeIconUpload.single('image'), createRecipe);
+recipeRouter.post('/recipes', isAuthenticated, hasPermission('create_recipe'), recipeIconUpload.single('avatar'), createRecipe);
 
 recipeRouter.get('/recipes', getAllRecipes);
 
