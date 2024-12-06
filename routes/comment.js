@@ -7,6 +7,6 @@ commentRouter.post('/comments', createComment);
 
 commentRouter.get('/comment', getAllComments);
 
-commentRouter.delete('/comments:id', deleteComment);
+commentRouter.delete('/comments/:id', deleteComment);
 
-commentRouter.patch('/comments:id', updateComment);
+commentRouter.patch('/comments/:id', updateComment);

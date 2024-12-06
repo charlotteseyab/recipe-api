@@ -13,9 +13,9 @@ userRouter.post('/login', login);
 
 userRouter.get('/profile', isAuthenticated, getProfile);
 
-userRouter.patch('/profile:id', isAuthenticated, hasPermission('update_profile'), recipeIconUpload.single('avatar'), updateProfile);
+userRouter.patch('/profile/:id', isAuthenticated, hasPermission('update_profile'), recipeIconUpload.single('avatar'), updateProfile);
 
-userRouter.delete('/profile:id', isAuthenticated, deleteProfile);
+userRouter.delete('/profile/:id', isAuthenticated, deleteProfile);
 
 userRouter.post('/logout', isAuthenticated, logout);
 
