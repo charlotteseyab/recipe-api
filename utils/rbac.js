@@ -1,6 +1,6 @@
 export const permissions = [
     {
-        role: "admin",
+        role: "chef",
         actions: [
             'create_recipe',
             'update_recipe',
