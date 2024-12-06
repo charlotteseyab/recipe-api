@@ -13,7 +13,7 @@ export const loginValidator = Joi.object({
 });
 
 export const updateProfileValidator = Joi.object({
-    username: Joi.string().min(3).max(30),
+    name: Joi.string().min(3).max(30),
     email: Joi.string().email(),
     role: Joi.string().valid("admin", "user"),
     password: Joi.string().min(6),
