@@ -18,6 +18,7 @@ export const permissions = [
             'read_recipe',
             'update_profile',
             'get_profile',
+            'comment'
             
         ],
     },
