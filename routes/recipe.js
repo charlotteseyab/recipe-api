@@ -13,8 +13,8 @@ recipeRouter.get('/recipes', getAllRecipes);
 
 recipeRouter.get('/recipes/:id', getRecipe);
 
-recipeRouter.patch('/recipes/:id', updateRecipe);
+// recipeRouter.patch('/recipes/:id', recipeIconUpload.single('image'), updateRecipe);
 
-recipeRouter.delete('/recipes/:id', deleteRecipe);
+// recipeRouter.delete('/recipes/:id', deleteRecipe);
 
 export default recipeRouter;
